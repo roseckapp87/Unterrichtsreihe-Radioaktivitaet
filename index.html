@@ -87,6 +87,11 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
   max-width: 420px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
   text-align: center;
+  animation: card-appear .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes card-appear {
+  0% { opacity: 0; transform: translateY(20px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 .logo-wrap { margin-bottom: 8px; }
 .logo-icon { font-size: 52px; display: block; animation: pulse-glow 3s ease-in-out infinite; }
@@ -104,7 +109,7 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
   background-clip: text;
   line-height: 1.1;
 }
-.logo-sub { color: var(--tx2); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 28px; margin-top: 4px; }
+.logo-sub { color: var(--tx2); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; margin-top: 4px; }
 
 /* Tabs */
 .tabrow { display: flex; gap: 4px; margin-bottom: 24px; background: var(--bg3); border-radius: var(--rs); padding: 4px; }
@@ -243,6 +248,18 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
 }
 .stit.bon { color: var(--xp); }
 
+/* Learning path connector */
+.tc-wrap { position: relative; }
+.tc-wrap:not(:last-child)::after {
+  content: '';
+  position: absolute; left: 42px; top: 100%; width: 2px; height: 10px;
+  background: linear-gradient(to bottom, var(--bd2), transparent);
+  z-index: 0;
+}
+.tc-wrap.tc-done:not(:last-child)::after {
+  background: linear-gradient(to bottom, rgba(0,212,170,0.4), rgba(0,212,170,0.1));
+}
+
 .tc {
   background: var(--card);
   border-radius: var(--r);
@@ -346,30 +363,36 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
 .tpf { height: 100%; background: var(--wn); border-radius: 2px; transition: width .5s; box-shadow: 0 0 8px rgba(255,183,3,0.5); }
 
 /* Phase tabs */
-.ptabs { display: flex; background: var(--bg2); border-bottom: 1px solid var(--bd2); flex-shrink: 0; gap: 0; }
+.ptabs { display: flex; background: var(--bg2); border-bottom: 1px solid var(--bd2); flex-shrink: 0; gap: 0; padding: 10px 16px 8px; position: relative; }
+.ptabs::before {
+  content: ''; position: absolute; top: 24px; left: 25%; width: 50%; height: 2px;
+  background: var(--bg3); z-index: 0;
+}
 .pt {
-  flex: 1; padding: 13px 8px 11px;
+  flex: 1; padding: 6px 8px 8px;
   border: none; background: transparent;
   font-family: 'Nunito', sans-serif;
   font-size: 11px; font-weight: 900;
   color: var(--tx2); cursor: pointer;
-  transition: all .2s;
+  transition: all .25s;
   border-bottom: 3px solid transparent;
   margin-bottom: -1px;
   letter-spacing: 0.3px;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  position: relative; z-index: 1;
 }
 .pt .pt-num {
-  width: 20px; height: 20px; border-radius: 50%;
-  background: var(--bg3); border: 1.5px solid var(--bd2);
-  font-size: 11px; font-weight: 900;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--bg3); border: 2px solid var(--bd2);
+  font-size: 12px; font-weight: 900;
   display: flex; align-items: center; justify-content: center;
-  transition: all .2s;
+  transition: all .25s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .pt.active { color: var(--p); border-bottom-color: var(--p); }
-.pt.active .pt-num { background: var(--p); border-color: var(--p); color: #fff; }
+.pt.active .pt-num { background: var(--p); border-color: var(--p); color: #fff; box-shadow: 0 0 12px rgba(108,99,255,0.5); transform: scale(1.1); }
 .pt.done { color: var(--ok); }
-.pt.done .pt-num { background: var(--ok); border-color: var(--ok); color: #fff; }
+.pt.done .pt-num { background: var(--ok); border-color: var(--ok); color: #fff; box-shadow: 0 0 10px rgba(0,212,170,0.4); }
 
 /* ===== TEXT/SIM PHASE ===== */
 /* Historical briefing */
@@ -428,22 +451,22 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
 .txt-block {
   background: var(--card);
   border-radius: var(--r);
-  padding: 24px 22px;
+  padding: 28px 24px;
   border: 1.5px solid var(--bd2);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
-.txt-block h3 { font-size: 17px; font-weight: 900; color: var(--tx); margin-bottom: 16px; line-height: 1.3; }
-.txt-block p { font-size: 14.5px; font-weight: 600; color: var(--tx); line-height: 1.85; margin-bottom: 14px; }
+.txt-block h3 { font-size: 17px; font-weight: 900; color: var(--tx); margin-bottom: 18px; line-height: 1.3; }
+.txt-block p { font-size: 15px; font-weight: 600; color: var(--tx); line-height: 2; margin-bottom: 18px; }
 .txt-block p:last-child { margin-bottom: 0; }
 .txt-block strong { color: var(--p2); }
 .txt-highlight {
   background: rgba(108,99,255,0.1);
   border-left: 3px solid var(--p);
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-radius: 0 var(--rs) var(--rs) 0;
-  margin: 16px 0;
-  font-size: 14px; font-weight: 700;
-  color: var(--tx); line-height: 1.65;
+  margin: 20px 0;
+  font-size: 14.5px; font-weight: 700;
+  color: var(--tx); line-height: 1.75;
   font-style: italic;
 }
 .txt-table {
@@ -491,8 +514,13 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 .hrt-q { font-size: 14px; transition: all .3s; }
 .hrt-q.lost { opacity: 0.2; filter: grayscale(1); animation: shake .3s ease; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
-@keyframes pop-correct { 0%{transform:scale(1)} 40%{transform:scale(1.04)} 100%{transform:scale(1)} }
-@keyframes xp-float { 0%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-40px) scale(1.3)} }
+@keyframes pop-correct { 0%{transform:scale(1)} 30%{transform:scale(1.06)} 60%{transform:scale(0.98)} 100%{transform:scale(1)} }
+@keyframes shake-wrong { 0%{transform:translateX(0)} 15%{transform:translateX(-6px)} 30%{transform:translateX(6px)} 45%{transform:translateX(-4px)} 60%{transform:translateX(4px)} 75%{transform:translateX(-2px)} 100%{transform:translateX(0)} }
+@keyframes flash-green { 0%{box-shadow:0 0 0 0 rgba(0,212,170,0.5)} 50%{box-shadow:0 0 20px 4px rgba(0,212,170,0.3)} 100%{box-shadow:none} }
+@keyframes flash-red { 0%{box-shadow:0 0 0 0 rgba(255,69,96,0.5)} 50%{box-shadow:0 0 16px 3px rgba(255,69,96,0.25)} 100%{box-shadow:none} }
+@keyframes xp-float { 0%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-50px) scale(1.4)} }
+.ch.co { animation: pop-correct .4s ease, flash-green .6s ease; }
+.ch.wr { animation: shake-wrong .45s ease, flash-red .5s ease; }
 .xp-toast {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
@@ -510,8 +538,8 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 
 /* Quiz card */
 .qc { background: var(--card); border-radius: var(--r); padding: 24px 20px; box-shadow: var(--sh); margin-bottom: 14px; border: 1.5px solid var(--bd2); }
-.qn { font-size: 10px; font-weight: 800; color: var(--tx2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
-.qq { font-size: 18px; font-weight: 900; line-height: 1.55; margin-bottom: 22px; color: var(--tx); }
+.qn { font-size: 10px; font-weight: 800; color: var(--tx2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.qq { font-size: 19px; font-weight: 900; line-height: 1.55; margin-bottom: 24px; color: var(--tx); }
 
 /* Context badge */
 .q-context { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2); border-radius: 20px; padding: 5px 12px; font-size: 11px; font-weight: 800; color: var(--ok); margin-bottom: 16px; }
@@ -519,16 +547,16 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 /* Choices */
 .chs { display: flex; flex-direction: column; gap: 10px; }
 .ch {
-  padding: 15px 16px;
+  padding: 16px 18px;
   border: 1.5px solid var(--bd2);
   border-radius: var(--rs);
   background: var(--bg3);
   font-family: 'Nunito', sans-serif;
-  font-size: 14.5px; font-weight: 700;
+  font-size: 15px; font-weight: 700;
   cursor: pointer; color: var(--tx);
   transition: all .18s; text-align: left;
-  display: flex; align-items: center; gap: 12px;
-  line-height: 1.45;
+  display: flex; align-items: center; gap: 14px;
+  line-height: 1.5;
 }
 .ch:active { transform: scale(0.99); }
 .ch-letter {
@@ -565,7 +593,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 
 /* Feedback */
 .fb { display: none; border-radius: var(--rs); padding: 14px 16px; margin-top: 12px; font-size: 14px; font-weight: 700; line-height: 1.5; }
-.fb.show { display: block; animation: slideUp .25s ease; }
+.fb.show { display: block; animation: slideUp .3s cubic-bezier(.34,1.56,.64,1); }
 @keyframes slideUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 .fb.fok { background: rgba(0,212,170,0.1); border: 1.5px solid rgba(0,212,170,0.3); color: var(--ok); }
 .fb.fng { background: rgba(255,69,96,0.08); border: 1.5px solid rgba(255,69,96,0.25); color: var(--er); }
@@ -712,6 +740,10 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
         <span class="logo-icon">☢️</span>
         <div class="logo">RADIOAKTIV</div>
         <div class="logo-sub">Die Lernmission · Klasse 9/10</div>
+        <div style="display:flex;justify-content:center;gap:12px;margin-bottom:22px">
+          <span style="font-size:10px;font-weight:700;color:var(--tx2);background:var(--bg3);padding:4px 10px;border-radius:20px;border:1px solid var(--bd2)">📚 13 Themen</span>
+          <span style="font-size:10px;font-weight:700;color:var(--tx2);background:var(--bg3);padding:4px 10px;border-radius:20px;border:1px solid var(--bd2)">🎮 130+ Quizfragen</span>
+        </div>
       </div>
       <div class="tabrow">
         <button class="tbtn active" onclick="switchTab('new')">Neu starten</button>
@@ -5876,7 +5908,7 @@ function renderMap(){
     else if(!ul) cl+='lk';
     else cl+='cur';
     const r=(CS.qr||{})[t.id];
-    tw.innerHTML+=`<div class="tc ${cl}" ${ul?`onclick="openT('${t.id}')"`:''}>`+
+    tw.innerHTML+=`<div class="tc-wrap${dn?' tc-done':''}"><div class="tc ${cl}" ${ul?`onclick="openT('${t.id}')"`:''}>`+
       `<div class="tic ${t.cl}">${t.ic}</div>`+
       `<div class="ti">`+
         `<div class="tt">${t.t}</div>`+
@@ -5890,7 +5922,7 @@ function renderMap(){
         `</div>`+
       `</div>`+
       (dn?'<div class="tch">✅</div>':!ul?'<div class="tch">🔒</div>':'')+
-    `</div>`;
+    `</div></div>`;
   });
 }
 
@@ -6160,11 +6192,12 @@ function chkAns(){
     toast.textContent='+10 XP';
     document.body.appendChild(toast);
     setTimeout(()=>toast.remove(),950);
-    // Pop-Animation auf der Antwort
-    const selEl=document.querySelector('.ch.co');
-    if(selEl) selEl.style.animation='pop-correct .35s ease';
+    // Haptic-like vibration if supported
+    if(navigator.vibrate) navigator.vibrate(50);
   } else {
     qH--;
+    // Haptic for wrong
+    if(navigator.vibrate) navigator.vibrate([40,30,40]);
     // Track wrong answer for review
     wrongAnswers.push({
       qi: curQI+1,
@@ -6257,22 +6290,28 @@ function showResults(){
     <div id="refSaved" style="display:none;margin-top:8px;font-size:13px;font-weight:700;color:var(--ok);text-align:center">Gespeichert ✓</div>
   </div>
 
-  <!-- MOODLE ABGABE -->
-  <div class="cbox" id="moodleBox">
-    <div class="cbt">📤 Abgabe für die Lehrkraft</div>
-    <p style="font-size:12px;font-weight:700;color:var(--wnd);margin-bottom:8px">PDF herunterladen und in Moodle hochladen:</p>
-    <div class="cstr" id="moodleText" style="font-size:11px;line-height:1.6;white-space:pre-wrap;word-break:break-all">${buildMoodleText(t,sc,qC,curQL.length,lernzeit,'')}</div>
-    <button class="cpb" onclick="exportPDF('${t.id}')" style="background:var(--ok);margin-bottom:8px">📄 PDF herunterladen</button>
-    <button class="cpb" onclick="copyMoodle()">📋 Text kopieren</button>
+  <!-- FORTSETZUNGSCODE – kompakt -->
+  <div class="cbox" style="padding:16px;border-color:rgba(108,99,255,0.3)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div class="cbt" style="margin:0">🔑 Fortsetzungscode</div>
+      <button class="cpb" onclick="copyCode()" style="width:auto;padding:7px 14px;font-size:12px">📋 Kopieren</button>
+    </div>
+    <div class="code-display" id="codeDisp" style="font-size:18px;letter-spacing:4px;padding:12px;margin:0">${code.match(/.{1,4}/g).join(' ')}</div>
+    <div class="chi" style="margin-top:6px;margin-bottom:0">📸 Screenshot machen oder abschreiben</div>
   </div>
 
-  <div class="cbox">
-    <div class="cbt">🔑 Fortsetzungscode für die nächste Stunde</div>
-    <p style="font-size:12px;font-weight:700;color:var(--wnd);margin-bottom:8px">Diesen Code für die nächste Stunde aufschreiben!</p>
-    <div class="code-display" id="codeDisp">${code.match(/.{1,4}/g).join(' ')}</div>
-    <div class="chi">📸 Tipp: Screenshot machen oder Code abschreiben</div>
-    <button class="cpb" onclick="copyCode()">📋 Code kopieren</button>
+  <!-- ABGABE – einklappbar -->
+  <div class="cbox" id="moodleBox" style="padding:0;overflow:hidden">
+    <button onclick="toggleMoodle()" style="width:100%;padding:14px 16px;background:transparent;border:none;color:var(--wn);font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:space-between">
+      <span>📤 Abgabe für Lehrkraft</span><span id="moodleArrow" style="transition:transform .2s">▼</span>
+    </button>
+    <div id="moodleCollapse" style="display:none;padding:0 16px 16px">
+      <button class="cpb" onclick="exportPDF('${t.id}')" style="background:var(--ok);margin-bottom:8px">📄 PDF herunterladen</button>
+      <button class="cpb" onclick="copyMoodle()">📋 Text kopieren</button>
+      <div class="cstr" id="moodleText" style="font-size:10px;line-height:1.5;white-space:pre-wrap;word-break:break-all;margin-top:8px;max-height:80px">${buildMoodleText(t,sc,qC,curQL.length,lernzeit,'')}</div>
+    </div>
   </div>
+
   <button class="bco" onclick="goMap()">Zur Lernkarte →</button>
   <button class="brp" onclick="openT('${t.id}')">🔄 Thema wiederholen</button>`;
   showSc('resultScreen');
@@ -6337,6 +6376,12 @@ function copyMoodle(){
     try{const s=window.getSelection(),r=document.createRange();r.selectNodeContents(el);s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();showToast('✅ Kopiert!');}
     catch(e){showToast('Bitte Text manuell kopieren!');}
   }
+}
+function toggleMoodle(){
+  const c=document.getElementById('moodleCollapse');
+  const a=document.getElementById('moodleArrow');
+  if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(180deg)';}
+  else{c.style.display='none';a.style.transform='rotate(0)';}
 }
 // ===== PDF EXPORT – gemeinsame Hilfsfunktionen =====
 function _pdfColors(){
