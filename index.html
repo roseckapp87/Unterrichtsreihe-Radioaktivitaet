@@ -1091,7 +1091,8 @@ function aQ(){return shuffle([
    q:'Lückentext: Atomaufbau',
    text:'Der Kern enthält [Protonen] und [Neutronen]. Die [Elektronen] kreisen in Schalen. A = Z + [N]. Isotope haben gleiche [Protonenzahl] aber verschiedene Neutronenzahlen.',
    gaps:['Protonen','Neutronen','Elektronen','N','Protonenzahl'],
-   distractors:['Quarks','Photonen','Positronen','A','Massenzahl','Kernladungszahl','Mesonen'],
+   swappable:[[0,1]],
+   distractors:['Quarks','Photonen','A','Massenzahl'],
    hint:'Die 5 Grundbegriffe des Atomaufbaus.',
    explain:'Diese fünf Begriffe beschreiben den vollständigen Aufbau eines Atoms nach dem Bohrschen Modell.'},
   {type:'choice',context:'⚛️ Kernphysik',
@@ -1147,7 +1148,7 @@ function rQ(){return shuffle([
    q:'Lückentext: Würfelmodell und Radioaktivität',
    text:'Jeder Würfel modelliert einen [instabilen] Atomkern. Eine Runde entspricht einem [Zeitschritt]. Die Zerfallswahrscheinlichkeit ist für jeden Kern [gleich]. Der Zerfall ist [spontan] und nicht vorhersagbar.',
    gaps:['instabilen','Zeitschritt','gleich','spontan'],
-   distractors:['stabilen','Energieimpuls','unterschiedlich','erzwungen','radioaktiven','Halbwertszeit','variabel'],
+   distractors:['stabilen','unterschiedlich','erzwungen','Halbwertszeit'],
    hint:'4 Kernaussagen des Modells.',
    explain:'Diese vier Begriffe beschreiben, was das Würfelmodell über radioaktiven Zerfall aussagt.'},
   {type:'choice',context:'⚗️ Aktivität',
@@ -1203,7 +1204,8 @@ function sQ(){return shuffle([
    q:'Lückentext: Die drei Strahlungsarten',
    text:'α-Strahlung: [Heliumkerne], Ladung [+2], gestoppt durch [Papier]. β-Strahlung: [Elektronen], gestoppt durch [Aluminium]. γ-Strahlung: elektromagnetisch, [neutral], gestoppt durch [Blei].',
    gaps:['Heliumkerne','+2','Papier','Elektronen','Aluminium','neutral','Blei'],
-   distractors:['Protonen','+1','Beton','Positronen','Kupfer','geladen','Glas','-1','Neutronen','Kunststoff'],
+   swappable:[[0,3]],
+   distractors:['Protonen','+1','Beton','Positronen','Kunststoff'],
    hint:'7 Schlüsselbegriffe der drei Strahlungsarten.',
    explain:'Diese Tabelle fasst alle drei Strahlungsarten mit ihren Eigenschaften und Abschirmungen zusammen.'},
   {type:'choice',context:'🔬 Fokus Physik S. 271',
@@ -1259,7 +1261,7 @@ function gQ(){return shuffle([
    q:'Lückentext: Geiger-Müller-Zählrohr',
    text:'Das GMZ misst [ionisierende] Strahlung als [Stromimpulse]. Die [Zählrate] nimmt mit dem Abstand ab. Gesetz: I ~ 1/[r²]. Die [Nullrate] muss abgezogen werden.',
    gaps:['ionisierende','Stromimpulse','Zählrate','r²','Nullrate'],
-   distractors:['sichtbare','Wärmepulse','Aktivität','r³','Messrate','elektromagnetische','Lichtblitze','Dosisrate'],
+   distractors:['sichtbare','Wärmepulse','r³','Dosisrate'],
    hint:'5 Schlüsselbegriffe des Geigerzählers.',
    explain:'Diese 5 Begriffe beschreiben Prinzip, Messgröße und Abstandsgesetz des Geiger-Müller-Zählrohrs vollständig.'},
   {type:'choice',context:'📏 Berechnung',
@@ -1315,7 +1317,7 @@ function abQ(){return shuffle([
    q:'Lückentext: Absorption der drei Strahlungsarten',
    text:'α wird gestoppt durch [Papier] oder Haut. β wird gestoppt durch [Aluminium] (5mm). γ wird geschwächt durch [Blei]. Die Intensität nimmt mit der Dicke [exponentiell] ab.',
    gaps:['Papier','Aluminium','Blei','exponentiell'],
-   distractors:['Glas','Beton','Wasser','linear','Stahl','Luft','Kupfer','quadratisch'],
+   distractors:['Glas','Wasser','linear','Kupfer'],
    hint:'4 Schlüsselbegriffe der Absorption.',
    explain:'Diese 4 Begriffe beschreiben die Abschirmung der drei Strahlungsarten vollständig.'},
   {type:'choice',context:'🧱 Abschirmung',
@@ -1371,7 +1373,7 @@ function hQ(){return shuffle([
    q:'Lückentext: Halbwertszeit',
    text:'Die Halbwertszeit t½ ist die Zeit, nach der [50]% der Kerne zerfallen sind. Das Zerfallsgesetz lautet: N(t) = N₀ · [½]^(t/t½). Bei kurzer t½ ist die [Aktivität] hoch. Die C-14-Methode nutzt t½ = [5730] Jahre.',
    gaps:['50','½','Aktivität','5730'],
-   distractors:['25','75','⅓','Energie','14.000','Reichweite','⅔','100','Dosis'],
+   distractors:['25','⅓','14.000','Dosis'],
    hint:'4 Schlüsselwerte der Halbwertszeit.',
    explain:'Diese 4 Werte und Begriffe beschreiben Halbwertszeit, Zerfallsgesetz und die C-14-Methode vollständig.'},
   {type:'choice',context:'⏳ Berechnung',
@@ -1483,7 +1485,7 @@ function mQ(){return shuffle([
    q:'Lückentext: Medizinische Anwendungen',
    text:'Szintigraphie nutzt [kurzlebige] Isotope wie [Tc-99m]. Strahlentherapie tötet [Tumorzellen] ab. Iod-131 therapiert die [Schilddrüse]. Fraktionierung schont [gesundes] Gewebe.',
    gaps:['kurzlebige','Tc-99m','Tumorzellen','Schilddrüse','gesundes'],
-   distractors:['langlebige','U-235','Körperzellen','Leber','erkranktes','Cs-137','Nervenzellen','Niere','radioaktives'],
+   distractors:['langlebige','U-235','Körperzellen','erkranktes'],
    hint:'5 Schlüsselbegriffe aus Fokus Physik S. 282–283.',
    explain:'Szintigraphie, Strahlentherapie und Iodtherapie sind die wichtigsten medizinischen Anwendungen ionisierender Strahlung.'},
   {type:'choice',context:'🏥 Vergleich',
@@ -1539,7 +1541,7 @@ function zrQ(){return shuffle([
    q:'Lückentext: Zerfallsreihen',
    text:'Alpha-Zerfall: Z−[2], A−[4]. Beta-minus: Z+[1], A [gleich]. U-238 endet bei [Blei]-206. Auf der Nuklidkarte: α-Zerfall = Sprung [links-unten].',
    gaps:['2','4','1','gleich','Blei','links-unten'],
-   distractors:['1','2','3','sinkt','Bismut','rechts-oben','links-oben','Polonium','rechts-unten'],
+   distractors:['3','sinkt','rechts-oben','Polonium'],
    hint:'6 Schlüsselbegriffe der Zerfallsreihen.',
    explain:'Diese 6 Begriffe beschreiben Sprungregeln und das Ende der wichtigsten Zerfallsreihe vollständig.'},
   {type:'choice',context:'🔗 Nuklidkarte',
@@ -1595,7 +1597,7 @@ function rkQ(){return shuffle([
    q:'Lückentext: Kernreaktor',
    text:'Kernspaltung: Neutron trifft [U-235] → Bruchstücke + [Neutronen] + [Energie]. k=[1]: stabiler Betrieb. [Steuerstäbe] regulieren k. Moderator [verlangsamt] Neutronen.',
    gaps:['U-235','Neutronen','Energie','1','Steuerstäbe','verlangsamt'],
-   distractors:['U-238','Protonen','Wärme','2','Kühlstäbe','beschleunigt','Plutonium','Elektronen','0'],
+   distractors:['U-238','Kühlstäbe','beschleunigt','Plutonium'],
    hint:'6 Schlüsselbegriffe des Kernreaktors.',
    explain:'Diese 6 Begriffe beschreiben Kernspaltung, Kettenreaktion und Reaktorsteuerung vollständig.'},
   {type:'choice',context:'⚙️ Unterschied',
@@ -1651,7 +1653,7 @@ function elQ(){return shuffle([
    q:'Lückentext: Endlagerung radioaktiver Abfälle',
    text:'Hochradioaktiver Abfall enthält langlebige [Isotope] wie Pu-239 (t½=[24.000] Jahre). Endlagerung erfolgt in [tiefen] geologischen Formationen. CASTOR-Behälter dienen der [Zwischenlagerung]. Radioaktivität kann [nicht] neutralisiert werden.',
    gaps:['Isotope','24.000','tiefen','Zwischenlagerung','nicht'],
-   distractors:['Elemente','5.730','oberirdischen','Endlagerung','leicht','Atome','100','flachen','sofort'],
+   distractors:['Elemente','5.730','Endlagerung','sofort'],
    hint:'5 Schlüsselbegriffe zur Endlagerung.',
    explain:'Diese 5 Begriffe fassen das zentrale Problem der Endlagerung radioaktiver Abfälle zusammen.'},
   {type:'choice',context:'🗄️ Zukunft',
@@ -1707,7 +1709,7 @@ function bQ(){return shuffle([
    q:'Lückentext: Biologische Strahlenwirkung',
    text:'H [Sv] = D × [w_R]. Für α: w_R=[20], für β/γ: w_R=[1]. Natürliche Jahresdosis: ca. [2,1] mSv. Somatische Schäden betreffen den [Bestrahlten] selbst.',
    gaps:['w_R','20','1','2,1','Bestrahlten'],
-   distractors:['Bq','10','2','10,0','Nachkommen','Gy','5','0','0,1','Umgebung'],
+   distractors:['Bq','10','Nachkommen','Gy','0,1'],
    hint:'5 Schlüsselwerte der Strahlendosimetrie.',
    explain:'Diese 5 Werte sind Grundlage des Strahlenschutzes – aus Fokus Physik S. 279.'},
   {type:'choice',context:'🧬 Strahlenkrankheit',
@@ -1763,7 +1765,8 @@ function kQ(){return shuffle([
    q:'Lückentext: Kernfusion',
    text:'Fusion: [leichte] Kerne verschmelzen. Reaktion: [Deuterium]+[Tritium]→He-4+n+Energie. Temperatur: ca. [100] Mio. °C. Der [Tokamak] schließt das Plasma ein. Brennstoff: aus [Meerwasser].',
    gaps:['leichte','Deuterium','Tritium','100','Tokamak','Meerwasser'],
-   distractors:['schwere','Uran','Helium','15','Stellarator','Grundwasser','mittlere','Plutonium','Proton','10'],
+   swappable:[[1,2]],
+   distractors:['schwere','Uran','15','Grundwasser'],
    hint:'6 Schlüsselbegriffe der Kernfusion.',
    explain:'Diese 6 Begriffe beschreiben das Prinzip der Kernfusion und warum sie als Energiequelle der Zukunft gilt.'},
   {type:'choice',context:'🌟 Status',
@@ -6650,23 +6653,54 @@ function buildGp(q){
 }
 
 // DnD check helper used in chkAns
+// Supports q.swappable: [[0,1], [3,4]] – slots in a group accept any permutation of their correct answers
 function checkDndAns(q){
   const vals = window._dndGetVals ? window._dndGetVals() : [];
-  let all = true;
   const gaps = q.gaps||[];
-  // Show correct/wrong on slots
-  const container = document.getElementById('dndContainer');
-  if(!container) return false;
+  const swappable = q.swappable||[]; // e.g. [[0,1]] means slot 0 and 1 can be swapped
+
+  // Build a "correct assignment" considering swappable groups
+  // For each swappable group, try all permutations and take the one that maximises correct
+  const assignment = [...gaps]; // default: position-locked
+
+  swappable.forEach(group=>{
+    // get the placed vals for these slots
+    const placed = group.map(i=>vals[i]||'');
+    const expected = group.map(i=>gaps[i]||'');
+    // try all permutations of placed against expected
+    const perms = permutations(placed);
+    let best = 0, bestPerm = placed;
+    perms.forEach(perm=>{
+      const score = perm.filter((v,pi)=>v.toLowerCase().trim()===expected[pi].toLowerCase().trim()).length;
+      if(score>best){best=score;bestPerm=perm;}
+    });
+    // assign the best-matching permutation back
+    group.forEach((slotIdx,pi)=>{
+      assignment[slotIdx]=bestPerm[pi];
+    });
+  });
+
+  // Now check each slot against the (possibly reordered) assignment
+  let all = true;
   document.querySelectorAll('.dnd-slot').forEach((slot,i)=>{
     const v=(vals[i]||'').toLowerCase().trim();
-    const ex=(gaps[i]||'').toLowerCase().trim();
+    const ex=(assignment[i]||gaps[i]||'').toLowerCase().trim();
     if(v===ex){ slot.classList.add('correct'); }
     else { slot.classList.add('wrong'); all=false; }
     slot.style.pointerEvents='none';
   });
-  // Lock chips
   document.querySelectorAll('.dnd-chip').forEach(c=>c.style.pointerEvents='none');
   return all;
+}
+
+function permutations(arr){
+  if(arr.length<=1) return [arr];
+  const result=[];
+  arr.forEach((item,i)=>{
+    const rest=arr.filter((_,j)=>j!==i);
+    permutations(rest).forEach(perm=>result.push([item,...perm]));
+  });
+  return result;
 }
 function chkAns(){
   const q=curQL[curQI];let ok=false;
