@@ -910,6 +910,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
         </div>
         <div class="hrow" id="heartRow"></div>
       </div>
+      <button onclick="logout()" title="Abmelden"
+        style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--tx2);
+        font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;padding:6px 10px;
+        border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0">
+        ⏏ Wechseln
+      </button>
     </div>
   </div>
   <div class="sb" id="mapScroll">
@@ -6042,7 +6048,18 @@ function parseCode(c){
 }
 function loadAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return {};}}
 function saveAll(d){localStorage.setItem(SK,JSON.stringify(d));}
-function saveS(s){const a=loadAll();a[s.name.toLowerCase().trim()]=s;saveAll(a);}
+function saveS(s){
+  const a=loadAll();
+  a[s.name.toLowerCase().trim()]=s;
+  saveAll(a);
+  if(!isTch) localStorage.setItem('rv4_active',s.name.toLowerCase().trim());
+}
+function logout(){
+  localStorage.removeItem('rv4_active');
+  CS=null; isTch=false;
+  showSc('loginScreen');
+  switchTab('new');
+}
 function newS(n,k){return{name:n,klasse:k||'',completed:[],xp:0,hearts:MH,badges:[],qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};}
 
 // ===== NOTEN-SYSTEM =====
@@ -6132,7 +6149,12 @@ function doTeach(){
   CS={name:'Lehrkraft',klasse:'',completed:TOPS.map(t=>t.id),xp:9999,hearts:99,badges:BDGS.map(b=>b.id),qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};
   enterApp();
 }
-function enterApp(){showSc('mapScreen');renderMap();}
+function enterApp(){
+  // Aktiven Nutzer merken (nicht für Lehrkraft)
+  if(!isTch) localStorage.setItem('rv4_active', CS.name.toLowerCase().trim());
+  showSc('mapScreen');
+  renderMap();
+}
 
 // ===== LEVEL =====
 function getLvl(xp){return LVLS.find(l=>xp>=l.min&&xp<l.max)||LVLS[LVLS.length-1];}
@@ -7527,8 +7549,25 @@ function initParticles(){
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',()=>{
   initParticles();
+
+  // ── Auto-Resume ──────────────────────────────────────────────
+  // Beim Laden prüfen ob eine aktive Session gespeichert ist
+  const lastUser = localStorage.getItem('rv4_active');
+  if(lastUser){
+    const all = loadAll();
+    const saved = all[lastUser];
+    if(saved && saved.name){
+      CS = saved;
+      isTch = false;
+      // Session direkt wiederherstellen – kein Login nötig
+      enterApp();
+      // Kurz Toast zeigen
+      setTimeout(()=>showToast(`👋 Willkommen zurück, ${CS.name}!`), 600);
+      return;
+    }
+  }
+  // Kein gespeicherter Nutzer → normaler Login
   switchTab('new');
-  // Enter key support
   document.getElementById('newName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('newKlasse').focus();});
   document.getElementById('newKlasse').addEventListener('keydown',e=>{if(e.key==='Enter')doNew();});
   document.getElementById('contName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('contCode').focus();});
