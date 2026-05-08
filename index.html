@@ -235,9 +235,6 @@ body { font-family: 'Nunito', sans-serif; color: var(--tx); display: flex; flex-
 .xpl { font-size: 11px; color: var(--wn); font-weight: 800; white-space: nowrap; }
 
 /* Hearts */
-.hrow { display: flex; gap: 4px; margin-top: 2px; }
-.hrt { font-size: 16px; transition: all .3s; }
-.hrt.empty { opacity: 0.25; filter: grayscale(1); }
 
 /* Badges strip */
 .bstr { padding: 16px 16px 0; }
@@ -538,9 +535,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 .qhdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
 .qpg { font-size: 12px; font-weight: 800; color: var(--tx2); }
 .qsc { font-size: 12px; font-weight: 800; color: var(--p2); }
-.hq { display: flex; gap: 3px; }
-.hrt-q { font-size: 14px; transition: all .3s; }
-.hrt-q.lost { opacity: 0.2; filter: grayscale(1); animation: shake .3s ease; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
 @keyframes pop-correct { 0%{transform:scale(1)} 30%{transform:scale(1.06)} 60%{transform:scale(0.98)} 100%{transform:scale(1)} }
 @keyframes shake-wrong { 0%{transform:translateX(0)} 15%{transform:translateX(-6px)} 30%{transform:translateX(6px)} 45%{transform:translateX(-4px)} 60%{transform:translateX(4px)} 75%{transform:translateX(-2px)} 100%{transform:translateX(0)} }
@@ -908,7 +902,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
           <div class="xpb"><div class="xpf" id="xpFill" style="width:0%"></div></div>
           <div class="xpl" id="xpLbl">0 XP</div>
         </div>
-        <div class="hrow" id="heartRow"></div>
       </div>
       <button onclick="logout()" title="Abmelden"
         style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--tx2);
@@ -964,16 +957,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 </div>
 
 <!-- ===== FAILED SCREEN ===== -->
-<div id="failedScreen" class="screen">
-  <div class="fail-hdr ghdr">
-    <div class="thi">
-      <button class="bb" onclick="goMap()">←</button>
-      <div class="tht"><h2>Nicht bestanden</h2></div>
-    </div>
-  </div>
-  <div class="sb"><div id="failBody"></div></div>
-  <button class="fab-pdf" onclick="exportPDFGesamt()">📄 Lehrerauswertung</button>
-</div>
 
 <!-- ===== TEACHER SCREEN ===== -->
 <div id="teacherScreen" class="screen">
@@ -995,8 +978,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px;
 // ===== KONSTANTEN =====
 const SK = 'rv4';
 const TPW = 'Ros1803';
-const MH = 3;
-const PT = 0.8;
+const MH = 0; // unused, kept for code compatibility
 
 // ===== LEVEL-SYSTEM =====
 const LVLS = [
@@ -6060,7 +6042,7 @@ function logout(){
   showSc('loginScreen');
   switchTab('new');
 }
-function newS(n,k){return{name:n,klasse:k||'',completed:[],xp:0,hearts:MH,badges:[],qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};}
+function newS(n,k){return{name:n,klasse:k||'',completed:[],xp:0,badges:[],qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};}
 
 // ===== NOTEN-SYSTEM =====
 function calcNote(pct){
@@ -6090,7 +6072,7 @@ function getDiff(q){
 function diffLabel(d){ return d===1?'■':d===2?'■■':'■■■'; }
 
 // ===== STATE =====
-let CS=null, curT=null, curPh='text', curTL='orig', curQI=0, curQL=[], qH=MH, qC=0, isTch=false, selCh=-1, wrongAnswers=[];
+let CS=null, curT=null, curPh='text', curTL='orig', curQI=0, curQL=[], qC=0, isTch=false, selCh=-1, wrongAnswers=[];
 // Tracking für aktuelle Quiz-Session
 let curQuestionLog=[];
 
@@ -6136,7 +6118,7 @@ function doCont(){
     if(d.spacedRep&&d.spacedRep.length&&!(CS.spacedRep||[]).length){CS.spacedRep=d.spacedRep;}
   } else {
     // Fresh from code – restore everything
-    CS={name:d.n,klasse:d.k||'',completed:d.c||[],xp:d.x||0,hearts:d.h||MH,
+    CS={name:d.n,klasse:d.k||'',completed:d.c||[],xp:d.x||0,
       badges:d.b||[],qr:d.qr||{},sessions:[],
       selfAssess:d.selfAssess||{},questionLog:d.questionLog||{},
       spacedRep:d.spacedRep||[],retryStats:{}};
@@ -6146,7 +6128,7 @@ function doCont(){
 function doTeach(){
   if(document.getElementById('teachPw').value!==TPW){document.getElementById('teachErr').textContent='Falsches Passwort!';return;}
   isTch=true;
-  CS={name:'Lehrkraft',klasse:'',completed:TOPS.map(t=>t.id),xp:9999,hearts:99,badges:BDGS.map(b=>b.id),qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};
+  CS={name:'Lehrkraft',klasse:'',completed:TOPS.map(t=>t.id),xp:9999,badges:BDGS.map(b=>b.id),qr:{},sessions:[],selfAssess:{},questionLog:{},spacedRep:[],retryStats:{}};
   enterApp();
 }
 function enterApp(){
@@ -6168,12 +6150,6 @@ function renderMap(){
   const xi=CS.xp-lv.min,xr=lv.max-lv.min;
   document.getElementById('xpFill').style.width=Math.min(100,xi/xr*100)+'%';
   document.getElementById('xpLbl').textContent=CS.xp+' XP';
-
-  // Hearts
-  const hr=document.getElementById('heartRow');
-  hr.innerHTML=Array.from({length:MH},(_,i)=>
-    `<span class="hrt${i<CS.hearts?'':' empty'}">❤️</span>`
-  ).join('');
 
   // Badges
   const br=document.getElementById('bdgRow');
@@ -6251,7 +6227,7 @@ function showSpacedRep(){
 // ===== OPEN TOPIC =====
 let topicStartTime=null;
 function openT(id){
-  curT=id; curPh='text'; curTL='orig'; curQI=0; qH=CS.hearts||MH; qC=0; selCh=-1; wrongAnswers=[];
+  curT=id; curPh='text'; curTL='orig'; curQI=0; qC=0; selCh=-1; wrongAnswers=[];
   curQuestionLog=[];
   topicStartTime=Date.now();
   curQL=shuffle([...getQuiz(id)]);
@@ -6520,7 +6496,7 @@ function skipTransfer(){
 function renderQuiz(b){
   if(curQI>=curQL.length){showTransferFrage();return;}
   const q=curQL[curQI],tot=curQL.length,pct=Math.round(curQI/tot*100);
-  b.innerHTML=`<div class="qhdr"><div class="qpg">Frage ${curQI+1}/${tot}</div><div class="qsc">✓ ${qC} richtig</div><div class="hq">${Array.from({length:MH},(_,i)=>`<span class="hrt-q${i<qH?'':' lost'}">❤️</span>`).join('')}</div></div>`+
+  b.innerHTML=`<div class="qhdr"><div class="qpg">Frage ${curQI+1}/${tot}</div><div class="qsc">✓ ${qC} richtig</div></div>`+
     `<div class="qprog"><div class="qprog-f" style="width:${pct}%"></div></div>`+
     `<div class="qc">`+
       (q.context?`<div class="q-context">${q.context}</div>`:'')+
@@ -6775,7 +6751,6 @@ function chkAns(){
       saveS(CS);
     }
   } else {
-    qH--;
     // Haptic for wrong
     if(navigator.vibrate) navigator.vibrate([40,30,40]);
     // Track wrong answer for review
@@ -6796,7 +6771,6 @@ function chkAns(){
 
     fb.className='fb show fng';
     fb.innerHTML=`❌ Nicht ganz.<div class="fbx">${q.explain}</div>${q.hint?`<div class="fbx" style="color:var(--wnd);margin-top:4px">💡 Tipp: ${q.hint}</div>`:''}`;
-    if(qH<=0){setTimeout(showFailed,1300);return;}
   }
   document.getElementById('bCk').style.display='none';
   document.getElementById('bNx').style.display='block';
@@ -6807,13 +6781,11 @@ function nxtQ(){curQI++;renderQuiz(document.getElementById('tBody'));}
 // ===== RESULTS =====
 function showResults(){
   const t=TOPS.find(x=>x.id===curT),sc=qC/curQL.length;
-  if(sc<PT&&!isTch){showFailed();return;}
   if(!CS.completed.includes(t.id)){
     CS.completed.push(t.id);
     CS.xp+=t.xp;
     if(t.bdg&&!CS.badges.includes(t.bdg)) CS.badges.push(t.bdg);
   }
-  CS.hearts=Math.min(MH,CS.hearts+1);
   if(!CS.qr) CS.qr={};
   const lernzeit=topicStartTime?Math.round((Date.now()-topicStartTime)/1000/60):null;
 
@@ -7453,20 +7425,7 @@ function exportPDFGesamt(){
     showToast('✅ PDF gespeichert!');
   }catch(e){console.error(e);showToast('❌ PDF-Fehler: '+e.message);}
 }
-function showFailed(){
-  const t=TOPS.find(x=>x.id===curT);
-  CS.hearts=Math.max(0,qH); saveS(CS);
-  document.getElementById('failBody').innerHTML=`
-  <div class="fc">
-    <span style="font-size:60px;display:block;margin-bottom:10px">💪</span>
-    <div class="ft">Noch nicht bestanden!</div>
-    <div class="fs">Du brauchst mindestens 80% (${Math.ceil(curQL.length*0.8)} von ${curQL.length}) richtig.<br><br>Lies den Text nochmal und schau die Simulation an!</div>
-    <button class="bbt" onclick="setPhase('text');showSc('topicScreen')">📖 Text nochmal lesen</button>
-    <button class="bry" onclick="restartQ()">🔄 Quiz nochmal versuchen</button>
-  </div>`;
-  showSc('failedScreen');
-}
-function restartQ(){curQI=0;qH=MH;qC=0;selCh=-1;wrongAnswers=[];curQuestionLog=[];curQL=shuffle([...getQuiz(curT)]);showSc('topicScreen');setPhase('quiz');}
+function restartQ(){curQI=0;qC=0;selCh=-1;wrongAnswers=[];curQuestionLog=[];curQL=shuffle([...getQuiz(curT)]);showSc('topicScreen');setPhase('quiz');}
 
 // ===== TEACHER =====
 function openTeacher(){renderTeacher();showSc('teacherScreen');}
